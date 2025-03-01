@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Principes de Composition Visuelle</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap');
+    
+    :root {
+      --primary-color: #E60A14;
+      --primary-gradient: linear-gradient(135deg, #E60A14, #FF5C63);
+      --secondary-gradient: linear-gradient(135deg, #E60A14, #FF3B3F);
+      --text-color: #1F2937;
+      --bg-color: #F9FAFB;
+      --card-bg: #FFFFFF;
+      --accent-color: #E60A14;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      line-height: 1.6;
+    }
+    
+    header {
+      background: var(--primary-gradient);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('/api/placeholder/1200/300');
+      opacity: 0.1;
+      background-size: cover;
+      background-position: center;
+    }
+    
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .subtitle {
+      font-size: 1.2rem;
+      font-weight: 300;
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+    
+    .card {
+      background: var(--card-bg);
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .card-header {
+      padding: 1.5rem;
+      background: var(--secondary-gradient);
+      color: white;
+      display: flex;
+      align-items: center;
+    }
+    
+    .card-body {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .principle-number {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      margin-right: 0.5rem;
+      font-weight: bold;
+    }
+    
+    h2 {
+      display: inline-block;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .section {
+      margin: 4rem 0;
+    }
+    
+    .leading-lines {
+      background: var(--card-bg);
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    }
+    
+    .leading-lines h2 {
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .img-container {
+      position: relative;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      max-width: 100%;
+      margin: 2rem auto;
+    }
+    
+    .img-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .highlight {
+      background: var(--secondary-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 600;
+    }
+    
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    
+    .space-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+    
+    .space-card {
+      flex: 1;
+      min-width: 300px;
+      background: var(--card-bg);
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    }
+    
+    .space-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--accent-color);
+    }
+    
+    footer {
+      background: var(--primary-gradient);
+      color: white;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 4rem;
+    }
+    
+    /* Animation classes */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    .float {
+      animation: float 4s ease-in-out infinite;
+    }
+    
+    /* Toggle Button Styles */
+    .toggle-btn {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: var(--primary-gradient);
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.2s ease;
+      margin-top: auto;
+    }
+    
+    .toggle-btn:hover {
+      transform: scale(1.05);
+    }
+    
+    .toggle-btn:active {
+      transform: scale(0.95);
+    }
+    
+    /* Demo containers */
+    .demo-container {
+      margin-top: 1rem;
+      height: 0;
+      overflow: hidden;
+      transition: height 0.5s ease;
+      background-color: #f3f4f6;
+      border-radius: 0.5rem;
+    }
+    
+    .demo-container.active {
+      height: 200px;
+      padding: 1rem;
+    }
+    
+    /* Specific animations for each principle */
+    
+    /* Proximity Demo */
+    .proximity-demo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+    }
+    
+    .proximity-items {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      height: 80px;
+      transition: all 0.5s ease;
+    }
+    
+    .proximity-item {
+      width: 50px;
+      height: 50px;
+      background: var(--accent-color);
+      border-radius: 0.5rem;
+      transition: all 0.5s ease;
+    }
+    
+    .proximity-grouped .proximity-items {
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    /* Contrast Demo */
+    .contrast-demo {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 100%;
+    }
+    
+    .contrast-item {
+      width: 80px;
+      height: 80px;
+      border-radius: 0.5rem;
+      transition: all 0.5s ease;
+    }
+    
+    .contrast-item-1 {
+      background: #ffcccb;
+    }
+    
+    .contrast-item-2 {
+      background: #ffd1d1;
+    }
+    
+    .contrast-active .contrast-item-1 {
+      background: #E60A14;
+    }
+    
+    .contrast-active .contrast-item-2 {
+      background: #2C3E50;
+    }
+    
+    /* Repetition Demo */
+    .repetition-demo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+    
+    .repetition-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .repetition-item {
+      width: 30px;
+      height: 30px;
+      background: var(--accent-color);
+      opacity: 0.3;
+      transition: all 0.5s ease;
+    }
+    
+    .repetition-active .repetition-item {
+      opacity: 1;
+      background: var(--accent-color);
+    }
+    
+    .repetition-active .repetition-item:nth-child(2n) {
+      border-radius: 50%;
+    }
+    
+    /* Alignment Demo */
+    .alignment-demo {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    .alignment-line {
+      display: flex;
+      justify-content: flex-start;
+      margin-bottom: 10px;
+    }
+    
+    .alignment-item {
+      width: 100px;
+      height: 20px;
+      background: var(--accent-color);
+      margin-left: 10px;
+      transition: all 0.5s ease;
+    }
+    
+    .alignment-active .alignment-line {
+      justify-content: flex-start;
+    }
+    
+    .alignment-active .alignment-item {
+      margin-left: 0;
+    }
+    
+    /* White Space Demo */
+    .whitespace-demo {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .content-box {
+      width: 90%;
+      height: 120px;
+      background: #ffe5e5;
+      padding: 5px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.5s ease;
+    }
+    
+    .content-inner {
+      background: var(--accent-color);
+      color: white;
+      padding: 10px;
+      width: 90%;
+      text-align: center;
+      transition: all 0.5s ease;
+    }
+    
+    .whitespace-active .content-box {
+      padding: 20px;
+    }
+    
+    .whitespace-active .content-inner {
+      width: 70%;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 class="float">Composition Visuelle</h1>
+    <p class="subtitle">L'art d'organiser les éléments graphiques pour créer des designs captivants et efficaces.</p>
+  </header>
+  
+  <div class="container">
+    <div class="section">
+      <p>Lorsque vous regardez une affiche, vous vous demandez probablement : "Est-ce que je trouve cela intéressant ?" et "Est-ce que je comprends le message ?" Créer un intérêt visuel et assurer la clarté de la communication sont deux objectifs principaux de la composition.</p>
+      <p>Voici un aperçu des principes fondamentaux de la composition qui apparaissent dans chaque œuvre bien conçue. Bien que nous discutions de chaque principe séparément, rappelez-vous qu'ils sont étroitement liés. Rarement vous n'appliquerez qu'un seul principe.</p>
+    </div>
+    
+    <div class="grid">
+      <div class="card fade-in">
+        <div class="card-header">
+          <span class="principle-number">1</span>
+          <h2>Proximité</h2>
+        </div>
+        <div class="card-body">
+          <p>Les éléments qui se rapportent les uns aux autres doivent être regroupés. Lorsque plusieurs éléments sont proches les uns des autres, ils deviennent une unité visuelle plutôt que plusieurs unités séparées. Cela aide à organiser l'information, réduit le désordre et donne au lecteur une structure claire.</p>
+          <button class="toggle-btn" data-target="proximity-demo">Voir démonstration</button>
+          <div id="proximity-demo" class="demo-container">
+            <div class="proximity-demo">
+              <p>Cliquez à nouveau pour voir l'effet de proximité</p>
+              <div class="proximity-items">
+                <div class="proximity-item"></div>
+                <div class="proximity-item"></div>
+                <div class="proximity-item"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card fade-in">
+        <div class="card-header">
+          <span class="principle-number">2</span>
+          <h2>Contraste</h2>
+        </div>
+        <div class="card-body">
+          <p>L'idée derrière le contraste est d'éviter les éléments simplement similaires sur la page. Si les éléments (typographie, couleur, taille, épaisseur de ligne, forme, espace, etc.) ne sont pas identiques, alors rendez-les très différents. Le contraste est souvent l'attraction visuelle la plus importante sur une page—c'est ce qui fait regarder la page en premier lieu.</p>
+          <button class="toggle-btn" data-target="contrast-demo">Voir démonstration</button>
+          <div id="contrast-demo" class="demo-container">
+            <div class="contrast-demo">
+              <div class="contrast-item contrast-item-1"></div>
+              <div class="contrast-item contrast-item-2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card fade-in">
+        <div class="card-header">
+          <span class="principle-number">3</span>
+          <h2>Répétition</h2>
+        </div>
+        <div class="card-body">
+          <p>Répétez les éléments visuels du design tout au long de la pièce. Vous pouvez répéter les couleurs, les formes, les textures, les relations spatiales, les épaisseurs de ligne, les polices, les tailles, les concepts graphiques, etc. Cela développe l'organisation et renforce l'unité.</p>
+          <button class="toggle-btn" data-target="repetition-demo">Voir démonstration</button>
+          <div id="repetition-demo" class="demo-container">
+            <div class="repetition-demo">
+              <div class="repetition-row">
+                <div class="repetition-item"></div>
+                <div class="repetition-item"></div>
+                <div class="repetition-item"></div>
+              </div>
+              <div class="repetition-row">
+                <div class="repetition-item"></div>
+                <div class="repetition-item"></div>
+                <div class="repetition-item"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card fade-in">
+        <div class="card-header">
+          <span class="principle-number">4</span>
+          <h2>Alignement</h2>
+        </div>
+        <div class="card-body">
+          <p>Rien ne devrait être placé sur la page arbitrairement. Chaque élément devrait avoir une connexion visuelle avec un autre élément sur la page. Cela crée un aspect propre et sophistiqué.</p>
+          <button class="toggle-btn" data-target="alignment-demo">Voir démonstration</button>
+          <div id="alignment-demo" class="demo-container">
+            <div class="alignment-demo">
+              <div class="alignment-line">
+                <div class="alignment-item"></div>
+              </div>
+              <div class="alignment-line">
+                <div class="alignment-item"></div>
+              </div>
+              <div class="alignment-line">
+                <div class="alignment-item"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card fade-in">
+        <div class="card-header">
+          <span class="principle-number">5</span>
+          <h2>Espace Blanc</h2>
+        </div>
+        <div class="card-body">
+          <p>L'espace blanc est essentiel pour un design efficace. Il attire l'attention sur le contenu et offre une zone de repos pour les yeux. L'espace blanc est différent de l'espace négatif. L'espace négatif est une forme reconnaissable/forme cachée utilisant un arrangement spécifique d'autres éléments de design.</p>
+          <button class="toggle-btn" data-target="whitespace-demo">Voir démonstration</button>
+          <div id="whitespace-demo" class="demo-container">
+            <div class="whitespace-demo">
+              <div class="content-box">
+                <div class="content-inner">Contenu</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="leading-lines fade-in">
+      <h2>Les Lignes Directrices</h2>
+      <div class="img-container">
+        <img src="C:\Users\Hamza\Downloads\ccc.png" alt="Exemple de lignes directrices">
+      </div>
+      <div>
+        <h3>Qu'est-ce qu'une Ligne Directrice?</h3>
+        <p>Une ligne directrice est une règle de composition artistique qui vous emmène dans un voyage dirigé par le designer ou le photographe. Cela pourrait être le long de voies ferrées, une route, ou une avenue d'arbres, mais c'est une ligne qui amène le spectateur à une destination prédéterminée—elle dirige les yeux du spectateur vers le sujet principal de la photo.</p>
+        <p>Chaque fois que vous regardez une photographie, vos yeux sont naturellement attirés par les lignes présentes. Vous suivez instinctivement ces lignes pour voir où elles mènent.</p>
+      </div>
+    </div>
+    
+    <div class="space-section fade-in">
+      <div class="space-card">
+        <h3>Espace Blanc</h3>
+        <p>L'espace blanc dans le design est comme le silence en musique—il est aussi important que le contenu lui-même. Il crée de la <span class="highlight">respiration</span> dans votre design et permet aux éléments importants de se démarquer.</p>
+        <p>Un bon espace blanc offre:</p>
+        <ul>
+          <li>Meilleure lisibilité</li>
+          <li>Focalisation sur les éléments clés</li>
+          <li>Sensation d'élégance et de sophistication</li>
+        </ul>
+      </div>
+      
+      <div class="space-card">
+        <h3>Espace Négatif</h3>
+        <p>Contrairement à l'espace blanc, l'espace négatif est intentionnellement formé pour créer une <span class="highlight">forme secondaire</span> qui a sa propre signification. C'est une technique puissante utilisée par de nombreux designers pour ajouter de la profondeur et de l'intelligence à leurs créations.</p>
+        <p>L'espace négatif bien conçu peut:</p>
+        <ul>
+          <li>Raconter une histoire double</li>
+          <li>Renforcer l'identité de marque</li>
+          <li>Créer des designs mémorables</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <footer>
+    <p>Hamza Ayechi, GOMYCODE © 2025</p>
+  </footer>
+  
+  <script>
+    // Animation pour les éléments fade-in
+    document.addEventListener('DOMContentLoaded', function() {
+      const fadeElements = document.querySelectorAll('.fade-in');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = 1;
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      fadeElements.forEach(element => {
+        observer.observe(element);
+      });
+      
+      // Toggle functionality
+      const toggleButtons = document.querySelectorAll('.toggle-btn');
+      
+      toggleButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const targetId = this.getAttribute('data-target');
+          const targetContainer = document.getElementById(targetId);
+          
+          // Toggle the container
+          if (targetContainer.classList.contains('active')) {
+            // Spécialement pour la démonstration de proximité, on garde la démonstration ouverte
+            if (targetId !== 'proximity-demo') {
+              targetContainer.classList.remove('active');
+            }
+          } else {
+            targetContainer.classList.add('active');
+          }
+          
+          // Toggle the animations regardless of container state
+          switch(targetId) {
+            case 'proximity-demo':
+              const proximityDemo = targetContainer.querySelector('.proximity-demo');
+              proximityDemo.classList.toggle('proximity-grouped');
+              break;
+            case 'contrast-demo':
+              const contrastDemo = targetContainer.querySelector('.contrast-demo');
+              contrastDemo.classList.toggle('contrast-active');
+              break;
+            case 'repetition-demo':
+              const repetitionDemo = targetContainer.querySelector('.repetition-demo');
+              repetitionDemo.classList.toggle('repetition-active');
+              break;
+            case 'alignment-demo':
+              const alignmentDemo = targetContainer.querySelector('.alignment-demo');
+              alignmentDemo.classList.toggle('alignment-active');
+              break;
+            case 'whitespace-demo':
+              const whitespaceDemo = targetContainer.querySelector('.whitespace-demo');
+              whitespaceDemo.classList.toggle('whitespace-active');
+              break;
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
